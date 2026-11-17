@@ -1,0 +1,259 @@
+#   -------------------------------------------------------------------------------------
+#   ----------------------   The Ultimate Mob Levelling Solution   ----------------------
+#   -------------------------------------------------------------------------------------
+
+common:
+  prefix: '&b&lLevelledMobs:&7'
+  no-permission:
+    - '%prefix% &cУ вас нет доступа к этой команде.'
+  players-only:
+    - '%prefix% &cЭта команда доступна только игрокам.'
+  player-offline:
+    - '%prefix% &cИгрок ''&r%player%&c'' не в сети.'
+  invalid-command:
+    - '%prefix% &cНеизвестная команда.'
+
+command:
+  levelledmobs:
+    main-usage:
+      - '%prefix% Доступные команды:'
+      - '&8 &m->&b /%label% debug &8- &7команды отладки плагина'
+      - '&8 &m->&b /%label% egg &8- &7создание яиц призыва мобов с уровнями'
+      - '&8 &m->&b /%label% help &8- &7ссылка на документацию и вики'
+      - '&8 &m->&b /%label% info &8- &7информация о плагине'
+      - '&8 &m->&b /%label% kill &8- &7массовое удаление мобов с уровнями'
+      - '&8 &m->&b /%label% reload &8- &7перезагрузка файлов конфигурации'
+      - '&8 &m->&b /%label% rules &8- &7информация о системе правил'
+      - '&8 &m->&b /%label% summon &8- &7призыв конкретных мобов с уровнями'
+
+    summon:
+      invalid-amount:
+        - '%prefix% &cНекорректное количество: ''&b%amount%&c''.'
+      invalid-entity-type:
+        - '%prefix% &cНекорректный тип существа: ''&b%entityType%&c''.'
+      invalid-level:
+        - '%prefix% &cНекорректный уровень: ''&b%level%&c''.'
+      invalid-summon-type:
+        - '%prefix% &cНекорректный тип призыва: ''&b%summonType%&c''.'
+      invalid-summon-type-console:
+        - '%prefix% &cТолько игроки могут использовать тип призыва ''&bhere''&c, используйте ''&batPlayer&c'' или ''&batLocation&c''.'
+      invalid-location:
+        - '%prefix% &cНекорректные координаты.'
+      here:
+        usage:
+          - '%prefix% Использование: &b/%label% summon <количество> <существо> <уровень> here'
+        success:
+          - '%prefix% Призвано &b%amount%&7 существ &fУр.%level% &b%entity%&7 на вашей позиции.'
+      atLocation:
+        usage:
+          - '%prefix% Использование: &b/%label% summon <количество> <существо> <уровень> atLocation <x> <y> <z> [мир]'
+        success:
+          - '%prefix% Призвано &b%amount%&7 существ &fУр.%level% &b%entity%&7 в координатах &8(&b%x%&7, &b%y%&7, &b%z%&7 в мире ''&b%world%&7''&8)&7.'
+        usage-console:
+          - '%prefix% Использование (консоль): &b/%label% summon <количество> <существо> <уровень> atLocation <x> <y> <z> <мир>'
+        invalid-world:
+          - '%prefix% &cНекорректный мир: ''&b%world%&c''.'
+        invalid-location:
+          - '%prefix% &cНекорректные координаты.'
+      atPlayer:
+        usage:
+          - '%prefix% Использование: &b/%label% summon <количество> <тип_существа> <уровень> atPlayer <игрок>'
+        success:
+          - '%prefix% Призвано &b%amount%&7 существ &fУр.%level% &b%entity%&7 рядом с игроком &r%targetDisplayname%&7.'
+      usage:
+        - '%prefix% Синтаксис команды призыва:'
+        - '&8 &m->&b /%label% summon <количество> <существо> <уровень> here'
+        - '&8 &m->&b /%label% summon <количество> <существо> <уровень> atPlayer <игрок>'
+        - '&8 &m->&b /%label% summon <количество> <существо> <уровень> atLocation <x> <y> <z> [мир]'
+      amount-limited:
+        min:
+          - '%prefix% Количество существ должно быть не менее &b1&7.'
+        max:
+          - '%prefix% Количество существ ограничено максимумом в &b%maxAmount%&7.'
+      level-limited:
+        min:
+          - '%prefix% Минимальный уровень ограничен &bУр.%minLevel%&7.'
+        max:
+          - '%prefix% Максимальный уровень ограничен &bУр.%maxLevel%&7.'
+      not-levellable:
+        - '%prefix% Существо &b%entity%&7 не поддерживает уровни.'
+
+    kill:
+      usage:
+        - '%prefix% Использование: &b/%label% kill <all/near>'
+      all:
+        invalid-world:
+          - '%prefix% &cНекорректный мир: ''&b%world%&c''.'
+        success:
+          - '%prefix% Уничтожено &b%killed%&7 уровневых мобов в мирах &8(&b%skipped%&7 пропущено&8)&7.'
+        usage:
+          - '%prefix% Использование: &b/%label% kill all [мир/*]'
+        usage-console:
+          - '%prefix% Использование (консоль): /%label% kill all <мир/*>'
+      near:
+        invalid-radius:
+          - '%prefix% &cНекорректный радиус: ''&b%radius%&c''.'
+        invalid-radius-min:
+          - '%prefix% Радиус скорректирован до минимального &8(&b%minRadius%&8)&7.'
+        invalid-radius-max:
+          - '%prefix% Радиус скорректирован до максимального &8(&b%maxRadius%&8)&7.'
+        success:
+          - '%prefix% Уничтожено &b%killed%&7 уровневых мобов в радиусе &b%radius%&7 блоков &8(&b%skipped%&7 пропущено&8)&7.'
+        usage:
+          - '%prefix% Использование: &b/%label% kill near <радиус>'
+
+    spawner:
+      usage:
+        - '%prefix% Синтаксис команд спавнера:'
+        - '&8 &m->&b /%label% spawner create'
+        - '&8 &m->&b /%label% spawner copy'
+        - '&8 &m->&b /%label% spawner info'
+        - ' '
+        - '&fПример:'
+        - '&8 &m->&b /%label% spawner create &3/minlevel&b 1 &3/maxlevel&b 10 &3/name&b "Кастомный спавнер" &3/customDropId&b Id1'
+      no-value:
+        - '%prefix% &cНе указано значение для ключа ''&b%keyname%&c''.'
+      no-player:
+        - '%prefix% &cКоманда может выполняться только игроком, если не указан параметр &b/giveplayer&c.'
+      invalid-value:
+        - '%prefix% &cНекорректное значение для &b%keyname%&c, должно быть числом.'
+      no-level-specified:
+        - '%prefix% &cВы должны указать minLevel и/или maxLevel.'
+      inventory-full:
+        - '%prefix% &cВаш инвентарь полон.'
+      spawner-give-message:
+        - '%prefix% Вам выдан уровневый спавнер.'
+      spawner-give-message-console:
+        - '%prefix% Выдан спавнер игроку &r%playername%&7. &8|&7 minLevel: &b%minlevel%&7, maxLevel: &b%maxlevel%&7'
+      permission-denied:
+        - '%prefix% &cУ вас нет прав на обновление или конвертацию спавнера.'
+      spawner-converted:
+        - '%prefix% Ванильный спавнер преобразован в уровневый спавнер "%spawnername%".'
+      spawner-updated:
+        - '%prefix% Уровневый спавнер обновлен яйцом призыва. Имя: "%spawnername%"'
+      info:
+        status-enabled:
+          - '%prefix% Информация о спавнере: &aвключена&f.'
+        status-not-enabled:
+          - '%prefix% Информация о спавнере: &cвыключена&f.'
+        enabled:
+          - '%prefix% Информация о спавнере: &aвключена&f. Кликните ПКМ по спавнеру для подробностей!'
+        disabled:
+          - '%prefix% Информация о спавнере &cотключена&f.'
+      copy:
+        vanilla-spawner:
+          - '%prefix% Копирование работает только с уровневыми спавнерами.'
+        status-enabled:
+          - '%prefix% Копирование спавнеров: &aвключено&f.'
+        status-not-enabled:
+          - '%prefix% Копирование спавнеров: &cвыключено&f.'
+        enabled:
+          - '%prefix% Копирование спавнеров: &aвключено&f. Кликните ПКМ по спавнеру с пустой рукой для копирования.'
+        disabled:
+          - '%prefix% Копирование спавнеров &cотключено&f.'
+
+    spawn_egg:
+      usage:
+        - '%prefix% Синтаксис команды egg:'
+        - '&8 &m->&b /%label% egg /minlevel <уровень> /maxlevel <уровень> /entity <существо>'
+      no-paper:
+        - '%prefix% Эта функция доступна только на ядрах Paper и его форках.'
+      no-value:
+        - '%prefix% Не указано значение для: &b%keyname%&7'
+      no-player:
+        - '%prefix% Команда может выполняться только игроком, если не указан /giveplayer'
+      no-player-specified:
+        - '%prefix% Игрок не указан'
+      invalid-value:
+        - '%prefix% Некорректное значение для &b%keyname%&7, должно быть числом'
+      no-level-specified:
+        - '%prefix% Необходимо указать minLevel, maxLevel и существо'
+      inventory-full:
+        - '%prefix% &4Ваш инвентарь полон!'
+      give-message:
+        - '%prefix% Вам выдано уровневое яйцо призыва'
+      give-message-console:
+        - '%prefix% Выдано уровневое яйцо призыва игроку &r%playername%&7.'
+
+    rules:
+      incomplete-command:
+        - '%prefix% &cНеполная команда.'
+      console-rules:
+        - '%prefix% Правила выведены в консоль.'
+      discord-invite:
+        - '%prefix% Нажмите для ссылки на Discord'
+      wiki-link:
+        - '%prefix% Нажмите для открытия вики'
+      rules-reprocessed:
+        - '%prefix% Правила переприменены для &b%entitycount%&7 мобов в &b%worldcount%&7 мирах.'
+      reset:
+        - '%prefix% Эта команда сбросит правила к одной из стандартных конфигураций.'
+      resetting:
+        - '%prefix% Сброс правил к сложности %difficulty%'
+      reset-complete:
+        - '%prefix% Файл rules.yml успешно обновлен.'
+      invalid-difficulty:
+        - '%prefix% &cНекорректная сложность: %difficulty%'
+      rule-name-missing:
+        - '%prefix% &cНеобходимо указать имя правила.'
+      rule-name-invalid:
+        - '%prefix% &cПравило с именем %rulename% не найдено.'
+      showing-rules:
+        - 'Отображение значений для правила: &b%rulename%&r'
+      no-entities-visible:
+        - '%prefix% Вы должны смотреть на ближайшее существо.'
+      no-entities-near:
+        - '%prefix% В радиусе 10 блоков не найдено существ.'
+      effective-rules:
+        - '%prefix% Действующие правила для: %entitytype% (Ур.%level% %mobname%) в %world%, %location%'
+      no-effective-rules:
+        - '%prefix% Действующих правил не найдено.'
+
+    reload:
+      started:
+        - '%prefix% Перезагрузка файлов конфигурации...'
+      finished:
+        - '%prefix% Конфигурация успешно перезагружена.'
+      usage:
+        - '%prefix% Использование: &b/%label% reload'
+
+    info:
+      about:
+        - ' '
+        - '&b&lLevelledMobs&b v%version%'
+        - '&7&o%description%'
+        - ' '
+        - '&7Разработчики: &f%maintainers%'
+        - '&7Контрибьюторы: &f%contributors%'
+        - '&7Поддержка версий: &fMC &f%supportedVersions%'
+        - ' '
+      listSeparator: '&7, &f'
+      usage:
+        - '%prefix% Использование: &b/%label% info'
+
+    compatibility:
+      notice:
+        - '%prefix% Проверка совместимости выведена в лог консоли.'
+      usage:
+        - '%prefix% Использование: &b/%label% compatibility'
+
+other:
+  compatibility-notice:
+    enabled: true
+    messages:
+      - '%prefix% Уведомление о совместимости LevelledMobs:'
+      - '&8 &m->&r &b%incompatibilities% &7возможных несовместимостей обнаружено. Запустите ''&b/levelledmobs compatibility&7''.'
+  update-notice:
+    messages:
+      - '&b&nОбновление LevelledMobs:'
+      - '&7Доступна новая версия &bLevelledMobs&7! Рекомендуется обновиться до &bv%latestVersion%&7. &8(&7Текущая: &bv%currentVersion%&8)'
+    send-in-console: true
+    send-on-join: true
+
+  mob-head-drop-name: 'Голова: %mob_name%'
+  no-drop-in-chunk: '%prefix% &7Вы достигли лимита убийств мобов на этой территории. Дополнительный лут временно отключен, возвращайтесь позже.'
+  create-debug:
+    - '&b&nСоздание диагностического архива'
+    - '&7Команда создает ZIP-архив с логами и списком плагинов для разработчиков.'
+
+file-version: 9

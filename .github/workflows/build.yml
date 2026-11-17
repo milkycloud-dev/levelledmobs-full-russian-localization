@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Validate YAML syntax
+        run: |
+          python -c "
+          import yaml, glob
+          for y in glob.glob('**/*.yml', recursive=True) + glob.glob('**/*.yaml', recursive=True):
+              yaml.safe_load(open(y, encoding='utf-8'))
+          print('All YAML configuration files are valid!')
+          "
