@@ -1,3 +1,8 @@
+## v4.0.0-ru3 (2026-11-20)
+
+- Восстановлены потерянные строки сообщений: `kill all`, `spawn_egg`, `spawner copy`, `rules reset`, `compatibility-notice`, `create-debug`.
+- Возвращены плейсхолдеры `%worlds%`, `%minlevel%`, `%maxlevel%`, `%entitytype%` и добавлен ключ `rules.reset-syntax`.
+
 ## v4.0.0-ru2 (2026-11-17)
 
 - Исправлено отображение имён мобов на английском языке (например, Pillager вместо Разбойник): удалён перехватывающий параметр all_entities из entity-name-override.
